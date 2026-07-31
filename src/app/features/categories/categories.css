@@ -1,0 +1,254 @@
+/* ===============================
+   PAGE
+================================ */
+
+.page {
+
+    padding: 30px;
+
+    background: #f4f7fb;
+
+    min-height: calc(100vh - 70px);
+
+}
+
+
+/* ===============================
+   HEADER
+================================ */
+
+.header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.header h1 {
+
+    margin: 0;
+
+    font-size: 26px;
+
+    font-weight: 600;
+
+    color: #1e293b;
+
+}
+
+
+
+/* ===============================
+   BOUTON AJOUT
+================================ */
+
+.header button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border-radius: 8px;
+
+    padding: 0 20px;
+
+    height: 42px;
+
+}
+
+
+
+/* ===============================
+   TABLEAU
+================================ */
+
+table {
+
+    width: 100%;
+
+    background: white;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+}
+
+
+
+/* ===============================
+   ENTETE TABLEAU
+================================ */
+
+.mat-mdc-header-row {
+
+    background: #f8fafc;
+
+}
+
+
+
+.mat-mdc-header-cell {
+
+    font-weight: 600;
+
+    color: #334155;
+
+    font-size: 14px;
+
+}
+
+
+
+/* ===============================
+   CELLULES
+================================ */
+
+.mat-mdc-cell {
+
+    color: #475569;
+
+    padding: 16px;
+
+}
+
+
+
+/* ===============================
+   LIGNES
+================================ */
+
+.mat-mdc-row {
+
+    transition: background .2s ease;
+
+}
+
+
+
+.mat-mdc-row:hover {
+
+    background: #f1f5f9;
+
+}
+
+
+
+/* ===============================
+   ACTIONS
+================================ */
+
+.mat-column-actions {
+
+    width: 120px;
+
+    text-align: center;
+
+}
+
+
+
+.mat-mdc-icon-button {
+
+    transition: transform .2s ease;
+
+}
+
+
+.mat-mdc-icon-button:hover {
+
+    transform: scale(1.15);
+
+}
+
+
+
+/* ===============================
+   ETAT
+================================ */
+
+.mat-column-actif {
+
+    width: 120px;
+
+}
+
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media(max-width:900px){
+
+
+    .page {
+
+        padding: 15px;
+
+    }
+
+
+    .header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+    }
+
+
+    table {
+
+        overflow-x: auto;
+
+        display: block;
+
+    }
+
+
+}
+
+
+
+.status {
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    display: inline-block;
+
+}
+
+
+.active {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+}
+
+
+.inactive {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+
+}

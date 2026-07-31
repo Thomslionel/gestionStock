@@ -1,0 +1,159 @@
+.page{
+    padding: 25px;
+    background: #f5f7fb;
+    min-height: 100vh;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+    color:#1e293b;
+}
+
+.subtitle{
+    margin-top:5px;
+    color:#64748b;
+    font-size:14px;
+}
+
+/* ==========================
+   TABLE
+========================== */
+
+table{
+    width:100%;
+    border-radius:15px;
+    overflow:hidden;
+    background:#fff;
+}
+
+.mat-mdc-header-row{
+    background:#2563eb;
+}
+
+.mat-mdc-header-cell{
+    color:white;
+    font-weight:600;
+    font-size:15px;
+}
+
+.mat-mdc-row{
+    transition:.25s;
+}
+
+.mat-mdc-row:hover{
+    background:#f8fafc;
+}
+
+.mat-mdc-cell{
+    padding:18px 10px;
+    border-bottom:1px solid #edf2f7;
+}
+
+/* ==========================
+   BADGES
+========================== */
+
+.badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+    color:white;
+    min-width:95px;
+    text-align:center;
+}
+
+.entree{
+    background:#16a34a;
+}
+
+.sortie{
+    background:#dc2626;
+}
+
+.ajustement{
+    background:#2563eb;
+}
+
+.inventaire{
+    background:#7c3aed;
+}
+
+.retour-client{
+    background:#0891b2;
+}
+
+.retour-fournisseur{
+    background:#ea580c;
+}
+
+.transfert{
+    background:#475569;
+}
+
+.casse{
+    background:#991b1b;
+}
+
+/* ==========================
+   QUANTITE
+========================== */
+
+.quantite{
+    font-weight:bold;
+    font-size:15px;
+}
+
+.quantite.entree{
+    color:#16a34a;
+}
+
+.quantite.sortie{
+    color:#dc2626;
+}
+
+/* ==========================
+   REFERENCE
+========================== */
+
+.reference{
+    font-family:monospace;
+    color:#475569;
+}
+
+/* ==========================
+   OBSERVATION
+========================== */
+
+.observation{
+    color:#64748b;
+    font-style:italic;
+}
+
+/* ==========================
+   EMPTY STATE
+========================== */
+
+.empty{
+    margin-top:30px;
+    text-align:center;
+    padding:50px;
+    border-radius:15px;
+    background:white;
+    color:#94a3b8;
+    font-size:16px;
+}

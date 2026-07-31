@@ -1,0 +1,19 @@
+.full-width{
+
+    width:100%;
+
+}
+
+
+mat-dialog-content{
+
+    min-width:350px;
+
+}
+
+
+p{
+
+    margin-bottom:20px;
+
+}

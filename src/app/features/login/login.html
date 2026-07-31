@@ -1,0 +1,97 @@
+<div class="login-container">
+
+    <mat-card class="login-card">
+
+        <div class="logo">
+
+            <img src="assets/images/logo.png">
+
+        </div>
+
+        <h1>Gestion de Stock</h1>
+
+        <p>Authentifiez-vous pour continuer</p>
+
+        <form
+            [formGroup]="loginForm"
+            (ngSubmit)="connexion()">
+
+            <mat-form-field
+                appearance="outline"
+                class="full-width">
+
+                <mat-label>Nom d'utilisateur</mat-label>
+
+                <input
+                    matInput
+                    formControlName="username">
+
+                <mat-icon matSuffix>
+
+                    person
+
+                </mat-icon>
+
+            </mat-form-field>
+
+            <mat-form-field
+                appearance="outline"
+                class="full-width">
+
+                <mat-label>Mot de passe</mat-label>
+
+                <input
+                    matInput
+                    [type]="hidePassword ? 'password':'text'"
+                    formControlName="password">
+
+                <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="hidePassword=!hidePassword">
+
+                    <mat-icon>
+
+                        {{hidePassword ? 'visibility_off' : 'visibility'}}
+
+                    </mat-icon>
+
+                </button>
+
+            </mat-form-field>
+
+            <div
+                class="error"
+                *ngIf="errorMessage">
+
+                {{errorMessage}}
+
+            </div>
+
+            <button
+                mat-raised-button
+                color="primary"
+                class="login-button"
+                type="submit"
+                [disabled]="loading">
+
+                <span *ngIf="!loading">
+
+                    Se connecter
+
+                </span>
+
+                <mat-spinner
+                    *ngIf="loading"
+                    diameter="22">
+
+                </mat-spinner>
+
+            </button>
+
+        </form>
+
+    </mat-card>
+
+</div>

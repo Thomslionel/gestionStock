@@ -1,0 +1,303 @@
+<div class="page">
+
+
+    <div class="header">
+
+
+        <div>
+
+            <h1>
+                Gestion du stock
+            </h1>
+
+            <p class="subtitle">
+                Suivi des quantités disponibles
+            </p>
+
+        </div>
+
+
+
+        <div class="actions-header">
+
+
+            <button
+                mat-stroked-button
+                color="primary"
+                (click)="loadStocks()">
+
+                Tous les stocks
+
+            </button>
+
+
+
+            <button
+                mat-stroked-button
+                color="warn"
+                (click)="loadStocksFaibles()">
+
+                Stocks faibles
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <table 
+        mat-table 
+        [dataSource]="stocks"
+        class="mat-elevation-z3 stock-table">
+
+
+
+
+
+        <!-- PRODUIT -->
+
+        <ng-container matColumnDef="produit">
+
+
+            <th mat-header-cell *matHeaderCellDef>
+
+                Produit
+
+            </th>
+
+
+            <td mat-cell *matCellDef="let s">
+
+                {{s.produitDesignation}}
+
+            </td>
+
+
+        </ng-container>
+
+
+
+
+
+
+
+
+        <!-- DISPONIBLE -->
+
+        <ng-container matColumnDef="disponible">
+
+
+            <th mat-header-cell *matHeaderCellDef>
+
+                Disponible
+
+            </th>
+
+
+
+            <td mat-cell *matCellDef="let s">
+
+
+                <span
+                [ngClass]="{
+                    'stock-faible': s.quantiteDisponible <= 5
+                }">
+
+                    {{s.quantiteDisponible}}
+
+                </span>
+
+
+            </td>
+
+
+        </ng-container>
+
+
+
+
+
+
+
+
+
+
+        <!-- RESERVE -->
+
+        <ng-container matColumnDef="reserve">
+
+
+            <th mat-header-cell *matHeaderCellDef>
+
+                Réservé
+
+            </th>
+
+
+
+            <td mat-cell *matCellDef="let s">
+
+                {{s.quantiteReservee}}
+
+            </td>
+
+
+        </ng-container>
+
+
+
+
+
+
+
+
+
+        <!-- REEL -->
+
+        <ng-container matColumnDef="reelle">
+
+
+            <th mat-header-cell *matHeaderCellDef>
+
+                Stock réel
+
+            </th>
+
+
+
+            <td mat-cell *matCellDef="let s">
+
+                {{s.quantiteReelle}}
+
+            </td>
+
+
+        </ng-container>
+
+
+
+
+
+
+
+
+
+        <!-- ACTIONS -->
+
+        <ng-container matColumnDef="actions">
+
+
+            <th mat-header-cell *matHeaderCellDef>
+
+                Actions
+
+            </th>
+
+
+
+            <td mat-cell *matCellDef="let s">
+
+
+                <div class="actions-stock">
+
+
+                    <!-- ENTREE STOCK -->
+
+                    <button
+                        mat-mini-fab
+                        color="primary"
+                        matTooltip="Entrée en stock"
+                        (click)="augmenter(s)">
+
+
+                        <mat-icon>
+                            add
+                        </mat-icon>
+
+
+                    </button>
+
+
+
+
+
+                    <!-- SORTIE STOCK -->
+
+                    <button
+                        mat-mini-fab
+                        color="warn"
+                        matTooltip="Sortie de stock"
+                        (click)="diminuer(s)">
+
+
+                        <mat-icon>
+                            remove
+                        </mat-icon>
+
+
+                    </button>
+
+
+                </div>
+
+
+            </td>
+
+
+        </ng-container>
+
+
+
+
+
+
+
+
+
+
+        <tr 
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+
+        </tr>
+
+
+
+
+
+        <tr 
+        mat-row
+        *matRowDef="let row; columns: displayedColumns">
+
+        </tr>
+
+
+
+
+
+    </table>
+
+
+
+
+
+
+    <div 
+    class="empty"
+    *ngIf="stocks.length === 0">
+
+
+        Aucun stock disponible
+
+
+    </div>
+
+
+
+</div>

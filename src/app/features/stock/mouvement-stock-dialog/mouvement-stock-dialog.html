@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>
+
+    {{data.type}}
+
+</h2>
+
+
+
+<mat-dialog-content>
+
+
+    <p>
+
+        Produit :
+
+        <strong>
+
+            {{data.produit}}
+
+        </strong>
+
+    </p>
+
+
+
+    <mat-form-field appearance="outline">
+
+
+        <mat-label>
+
+            Quantité
+
+        </mat-label>
+
+
+        <input matInput type="number" [formControl]="form.controls.quantite">
+
+
+    </mat-form-field>
+
+
+
+</mat-dialog-content>
+
+
+
+
+
+<mat-dialog-actions align="end">
+
+
+    <button mat-button (click)="annuler()">
+
+        Annuler
+
+    </button>
+
+
+
+
+    <button mat-raised-button color="primary" (click)="valider()">
+
+        Valider
+
+    </button>
+
+
+</mat-dialog-actions>

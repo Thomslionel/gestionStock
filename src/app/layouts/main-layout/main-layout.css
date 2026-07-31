@@ -1,0 +1,72 @@
+/* ===============================
+   VARIABLES
+================================ */
+
+:root{
+
+    --header-height:70px;
+    --sidebar-width:260px;
+
+}
+
+/* ===============================
+   LAYOUT
+================================ */
+
+.layout{
+
+    height:calc(100vh - 70px);
+
+    background:#f4f7fb;
+
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+
+.sidebar{
+
+    width:260px;
+
+    border:none;
+
+    background:white;
+
+    box-shadow:3px 0 15px rgba(0,0,0,.06);
+
+}
+
+/* ===============================
+   CONTENU
+================================ */
+
+mat-sidenav-content{
+
+    background:#f4f7fb;
+
+}
+
+.content{
+
+    padding:30px;
+
+    min-height:100%;
+
+    overflow:auto;
+
+}
+
+.content::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.content::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:10px;
+
+}
