@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     private authService: Auth
 
-  ) {}
+  ) { }
 
   intercept(
 
@@ -42,7 +42,20 @@ export class AuthInterceptor implements HttpInterceptor {
 
         setHeaders: {
 
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "true"
+
+        }
+
+      });
+
+    } else {
+
+      request = req.clone({
+
+        setHeaders: {
+
+          "ngrok-skip-browser-warning": "true"
 
         }
 
