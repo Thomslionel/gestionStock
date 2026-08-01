@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
@@ -22,13 +22,15 @@ import { DashBoardInterface } from '../../interfaces/DashBoardInterface';
 export class Dashboard implements OnInit {
 
 
-  dashboard!: DashBoardInterface;
+  dashboard: DashBoardInterface | null = null;
+
 
 
   stockColumns = [
     'designation',
     'quantite'
   ];
+
 
 
   mouvementColumns = [
@@ -39,7 +41,8 @@ export class Dashboard implements OnInit {
   ];
 
 
-  chart!: Chart;
+
+  chart?: Chart;
 
 
 
@@ -61,8 +64,10 @@ export class Dashboard implements OnInit {
 
   loadDashboard(){
 
+
     this.dashboardService.getDashboard()
       .subscribe({
+
 
         next:(response:any)=>{
 
@@ -76,12 +81,15 @@ export class Dashboard implements OnInit {
         },
 
 
+
         error:(err)=>{
 
+
           console.error(
-            "Erreur dashboard",
+            "Erreur chargement dashboard",
             err
           );
+
 
         }
 
@@ -96,16 +104,40 @@ export class Dashboard implements OnInit {
 
 
 
+
   createChart(){
 
 
-    if(!this.dashboard?.mouvementsParJour)
+    // Protection si les données ne sont pas encore chargées
+
+    if(
+      !this.dashboard ||
+      !this.dashboard.mouvementsParJour ||
+      this.dashboard.mouvementsParJour.length === 0
+    ){
+
       return;
+
+    }
 
 
 
     const mouvements =
       this.dashboard.mouvementsParJour;
+
+
+
+
+    // Détruire l'ancien graphique
+    // évite les doublons si le dashboard est rechargé
+
+    if(this.chart){
+
+      this.chart.destroy();
+
+    }
+
+
 
 
 
@@ -117,25 +149,30 @@ export class Dashboard implements OnInit {
         type:'bar',
 
 
+
         data:{
 
 
           labels:mouvements.map(
-            m=>m.jour
+            m => m.jour
           ),
 
 
+
           datasets:[
+
 
             {
 
               label:'Entrées',
 
               data:mouvements.map(
-                m=>m.entrees
+                m => m.entrees
               )
 
+
             },
+
 
 
             {
@@ -143,15 +180,19 @@ export class Dashboard implements OnInit {
               label:'Sorties',
 
               data:mouvements.map(
-                m=>m.sorties
+                m => m.sorties
               )
 
+
             }
+
 
           ]
 
 
         },
+
+
 
 
         options:{
@@ -161,6 +202,7 @@ export class Dashboard implements OnInit {
 
 
           maintainAspectRatio:false,
+
 
 
           plugins:{
