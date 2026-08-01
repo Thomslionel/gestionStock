@@ -1,1 +1,391 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+
+
+    <div class="header">
+
+        <h1>
+            Tableau de bord
+        </h1>
+
+        <p>
+            Gestion intelligente de votre stock
+        </p>
+
+    </div>
+
+
+
+
+
+    <!-- CARTES -->
+
+    <div class="cards">
+
+
+        <div class="card produits">
+
+            <div class="icon">
+                📦
+            </div>
+
+            <div>
+
+                <span>
+                    Produits
+                </span>
+
+                <h2>
+                    {{dashboard?.nombreProduits}}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="card categories">
+
+
+            <div class="icon">
+                📂
+            </div>
+
+
+            <div>
+
+                <span>
+                    Catégories
+                </span>
+
+
+                <h2>
+                    {{dashboard?.nombreCategories}}
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="card mouvements">
+
+
+            <div class="icon">
+                🔄
+            </div>
+
+
+            <div>
+
+                <span>
+                    Mouvements
+                </span>
+
+
+                <h2>
+                    {{dashboard?.nombreMouvements}}
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="card stock">
+
+
+            <div class="icon">
+                ⚠️
+            </div>
+
+
+            <div>
+
+                <span>
+                    Stock faible
+                </span>
+
+
+                <h2>
+                    {{dashboard?.nombreStocksFaibles}}
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- GRAPHIQUE -->
+
+
+    <div class="chart-panel">
+
+
+        <h2>
+            📈 Evolution des mouvements
+        </h2>
+
+
+        <div class="chart-container">
+
+            <canvas id="mouvementChart"></canvas>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- TABLEAUX -->
+
+
+    <div class="dashboard-content">
+
+
+
+
+
+        <!-- STOCK FAIBLE -->
+
+
+        <div class="panel">
+
+
+            <h2>
+                ⚠️ Produits en stock faible
+            </h2>
+
+
+
+            <table mat-table
+            [dataSource]="dashboard?.stocksFaibles || []">
+
+
+
+                <ng-container matColumnDef="designation">
+
+
+                    <th mat-header-cell *matHeaderCellDef>
+                        Produit
+                    </th>
+
+
+                    <td mat-cell *matCellDef="let s">
+
+                        {{s.produitDesignation}}
+
+                    </td>
+
+
+                </ng-container>
+
+
+
+
+
+                <ng-container matColumnDef="quantite">
+
+
+                    <th mat-header-cell *matHeaderCellDef>
+                        Quantité
+                    </th>
+
+
+                    <td mat-cell *matCellDef="let s">
+
+                        {{s.quantiteReelle}}
+
+                    </td>
+
+
+                </ng-container>
+
+
+
+
+
+                <tr mat-header-row
+                *matHeaderRowDef="stockColumns">
+                </tr>
+
+
+
+                <tr mat-row
+                *matRowDef="let row; columns:stockColumns">
+                </tr>
+
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <!-- MOUVEMENTS -->
+
+
+        <div class="panel">
+
+
+            <h2>
+                🕒 Derniers mouvements
+            </h2>
+
+
+
+
+            <table mat-table
+            [dataSource]="dashboard?.derniersMouvements || []">
+
+
+
+
+
+                <ng-container matColumnDef="date">
+
+
+                    <th mat-header-cell *matHeaderCellDef>
+                        Date
+                    </th>
+
+
+                    <td mat-cell *matCellDef="let m">
+
+                        {{m.dateMouvement | date:'dd/MM/yyyy HH:mm'}}
+
+                    </td>
+
+
+                </ng-container>
+
+
+
+
+
+                <ng-container matColumnDef="produit">
+
+
+                    <th mat-header-cell *matHeaderCellDef>
+                        Produit
+                    </th>
+
+
+                    <td mat-cell *matCellDef="let m">
+
+                        {{m.produitDesignation}}
+
+                    </td>
+
+
+                </ng-container>
+
+
+
+
+
+
+                <ng-container matColumnDef="type">
+
+
+                    <th mat-header-cell *matHeaderCellDef>
+                        Type
+                    </th>
+
+
+                    <td mat-cell *matCellDef="let m">
+
+                        {{m.type}}
+
+                    </td>
+
+
+                </ng-container>
+
+
+
+
+
+
+
+                <ng-container matColumnDef="quantite">
+
+
+                    <th mat-header-cell *matHeaderCellDef>
+                        Qté
+                    </th>
+
+
+                    <td mat-cell *matCellDef="let m">
+
+                        {{m.quantite}}
+
+                    </td>
+
+
+                </ng-container>
+
+
+
+
+
+                <tr mat-header-row
+                *matHeaderRowDef="mouvementColumns">
+                </tr>
+
+
+
+                <tr mat-row
+                *matRowDef="let row; columns:mouvementColumns">
+                </tr>
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+</div>

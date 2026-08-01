@@ -1,0 +1,272 @@
+.dashboard{
+
+    padding:30px;
+
+    background:#f5f7fb;
+
+    min-height:100vh;
+
+}
+
+
+
+.header{
+
+    margin-bottom:30px;
+
+}
+
+
+
+.header h1{
+
+    font-size:32px;
+
+    margin:0;
+
+    color:#1f2937;
+
+}
+
+
+
+.header p{
+
+    color:#6b7280;
+
+}
+
+
+
+
+
+.cards{
+
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:20px;
+
+
+}
+
+
+
+
+
+.card{
+
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.08);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+.icon{
+
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:32px;
+
+
+}
+
+
+
+.card h2{
+
+    margin:5px 0;
+
+    font-size:34px;
+
+}
+
+
+
+.card span{
+
+    color:#6b7280;
+
+}
+
+
+
+
+
+.produits .icon{
+
+    background:#dbeafe;
+
+}
+
+
+
+.categories .icon{
+
+    background:#dcfce7;
+
+}
+
+
+
+.mouvements .icon{
+
+    background:#fef3c7;
+
+}
+
+
+
+.stock .icon{
+
+    background:#fee2e2;
+
+}
+
+
+
+
+
+
+.chart-panel{
+
+
+    background:white;
+
+    margin-top:30px;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+.chart-container{
+
+
+    height:350px;
+
+
+}
+
+
+
+
+
+
+.dashboard-content{
+
+
+    margin-top:30px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+
+}
+
+
+
+
+
+.panel{
+
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+.panel h2{
+
+    margin-bottom:20px;
+
+    color:#1f2937;
+
+}
+
+
+
+
+
+table{
+
+    width:100%;
+
+}
+
+
+
+
+
+@media(max-width:1000px){
+
+
+.dashboard-content{
+
+    grid-template-columns:1fr;
+
+}
+
+
+}

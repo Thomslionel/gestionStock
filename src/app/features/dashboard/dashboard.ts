@@ -1,11 +1,192 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MatTableModule } from '@angular/material/table';
+
+import { Chart } from 'chart.js/auto';
+
+import { DashboardService } from '../../core/services/dashboard-service';
+import { DashBoardInterface } from '../../interfaces/DashBoardInterface';
+
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
+
+
+  dashboard!: DashBoardInterface;
+
+
+  stockColumns = [
+    'designation',
+    'quantite'
+  ];
+
+
+  mouvementColumns = [
+    'date',
+    'produit',
+    'type',
+    'quantite'
+  ];
+
+
+  chart!: Chart;
+
+
+
+  constructor(
+    private dashboardService: DashboardService
+  ){}
+
+
+
+  ngOnInit(): void {
+
+    this.loadDashboard();
+
+  }
+
+
+
+
+
+  loadDashboard(){
+
+    this.dashboardService.getDashboard()
+      .subscribe({
+
+        next:(response:any)=>{
+
+
+          this.dashboard = response.data;
+
+
+          this.createChart();
+
+
+        },
+
+
+        error:(err)=>{
+
+          console.error(
+            "Erreur dashboard",
+            err
+          );
+
+        }
+
+
+      });
+
+
+  }
+
+
+
+
+
+
+  createChart(){
+
+
+    if(!this.dashboard?.mouvementsParJour)
+      return;
+
+
+
+    const mouvements =
+      this.dashboard.mouvementsParJour;
+
+
+
+    this.chart = new Chart(
+      'mouvementChart',
+      {
+
+
+        type:'bar',
+
+
+        data:{
+
+
+          labels:mouvements.map(
+            m=>m.jour
+          ),
+
+
+          datasets:[
+
+            {
+
+              label:'Entrées',
+
+              data:mouvements.map(
+                m=>m.entrees
+              )
+
+            },
+
+
+            {
+
+              label:'Sorties',
+
+              data:mouvements.map(
+                m=>m.sorties
+              )
+
+            }
+
+          ]
+
+
+        },
+
+
+        options:{
+
+
+          responsive:true,
+
+
+          maintainAspectRatio:false,
+
+
+          plugins:{
+
+
+            legend:{
+
+
+              position:'top'
+
+
+            }
+
+
+          }
+
+
+        }
+
+
+      }
+
+    );
+
+
+  }
+
 
 }

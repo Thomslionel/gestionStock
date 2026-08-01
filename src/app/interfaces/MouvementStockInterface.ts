@@ -1,3 +1,5 @@
+
+
 export interface MouvementStockInterface {
 
 
@@ -32,6 +34,9 @@ export interface MouvementStockInterface {
 
 
     produitDesignation:string;
+
+
+    
 
 
 }
