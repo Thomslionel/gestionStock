@@ -7,14 +7,21 @@
             Historique des mouvements
         </h1>
 
-
     </div>
 
 
 
-    <table mat-table [dataSource]="mouvements" class="mat-elevation-z3">
+
+    <table 
+        mat-table
+        [dataSource]="mouvements"
+        class="mat-elevation-z3">
 
 
+
+
+
+        <!-- DATE -->
 
         <ng-container matColumnDef="date">
 
@@ -34,6 +41,35 @@
 
 
 
+
+
+
+        <!-- LOT -->
+
+        <ng-container matColumnDef="lot">
+
+            <th mat-header-cell *matHeaderCellDef>
+                Lot
+            </th>
+
+
+            <td mat-cell *matCellDef="let m">
+
+                {{m.numeroLot}}
+
+            </td>
+
+        </ng-container>
+
+
+
+
+
+
+
+
+        <!-- PRODUIT -->
+
         <ng-container matColumnDef="produit">
 
             <th mat-header-cell *matHeaderCellDef>
@@ -47,10 +83,18 @@
 
             </td>
 
+
         </ng-container>
 
 
 
+
+
+
+
+
+
+        <!-- TYPE -->
 
         <ng-container matColumnDef="type">
 
@@ -61,17 +105,31 @@
 
             <td mat-cell *matCellDef="let m">
 
+                <span 
+                [ngClass]="{
+                    'entree': m.type === 'ENTREE',
+                    'sortie': m.type === 'SORTIE'
+                }">
 
-                {{m.type}}
+                    {{m.type}}
+
+                </span>
 
 
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- QUANTITE -->
 
         <ng-container matColumnDef="quantite">
 
@@ -86,11 +144,18 @@
 
             </td>
 
+
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- REFERENCE -->
 
         <ng-container matColumnDef="reference">
 
@@ -101,15 +166,22 @@
 
             <td mat-cell *matCellDef="let m">
 
-                {{m.reference}}
+                {{m.reference || '-'}}
 
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- OBSERVATION -->
 
         <ng-container matColumnDef="observation">
 
@@ -120,25 +192,54 @@
 
             <td mat-cell *matCellDef="let m">
 
-                {{m.observation}}
+                {{m.observation || '-'}}
 
             </td>
+
 
         </ng-container>
 
 
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns">
+
+
+
+
+        <tr 
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
 
         </tr>
 
 
-        <tr mat-row *matRowDef="let row;columns:displayedColumns">
+
+
+
+        <tr 
+        mat-row
+        *matRowDef="let row; columns:displayedColumns">
 
         </tr>
+
 
 
     </table>
+
+
+
+
+
+
+    <div 
+    class="empty"
+    *ngIf="mouvements.length===0">
+
+
+        Aucun mouvement enregistré
+
+
+    </div>
+
 
 
 </div>

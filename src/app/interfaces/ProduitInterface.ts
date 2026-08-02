@@ -1,27 +1,46 @@
 export interface ProduitInterface {
 
-    id?: number;
 
-    code: string;
+    id?:number;
 
-    designation: string;
 
-    description?: string;
+    code:string;
 
-    prixAchat: number;
 
-    prixVente: number;
+    designation:string;
 
-    tva: number;
 
-    stockMinimum: number;
+    description?:string;
 
-    actif: boolean;
 
-    categorieCode?: string;
 
-    categorieLibelle?: string;
+    prixAchat:number;
 
-    categorieId: number;
+
+    prixVente:number;
+
+
+    tva:number;
+
+
+
+    stockMinimum:number;
+
+
+
+    actif:boolean;
+
+
+
+    categorieCode?:string;
+
+
+
+    categorieLibelle?:string;
+
+
+
+    categorieId:number;
+
 
 }

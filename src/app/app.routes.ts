@@ -10,6 +10,7 @@ import { Login } from './features/login/login';
 
 import { authGuard } from './core/guards/auth-guard';
 import { MouvementStock } from './features/mouvement-stock/mouvement-stock';
+import { Lot } from './features/lot/lot';
 
 
 export const routes: Routes = [
@@ -57,10 +58,13 @@ export const routes: Routes = [
                 path: 'stock',
                 component: Stock
             },
-
             {
                 path: 'mouvements',
                 component: MouvementStock
+            },
+            {
+                path: 'lots',
+                component: Lot
             }
 
         ]

@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>
+
+    {{ data ? 'Modifier le lot' : 'Nouveau lot' }}
+
+</h2>
+
+<mat-dialog-content>
+
+    <form
+        [formGroup]="form"
+        class="form">
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>Numéro du lot</mat-label>
+
+            <input
+                matInput
+                formControlName="numeroLot">
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>Produit</mat-label>
+
+            <mat-select formControlName="produitCode">
+
+                <mat-option
+                    *ngFor="let p of produits"
+                    [value]="p.code">
+
+                    {{ p.designation }}
+
+                </mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>Date fabrication</mat-label>
+
+            <input
+                matInput
+                [matDatepicker]="fabrication"
+                formControlName="dateFabrication">
+
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="fabrication">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #fabrication></mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>Date péremption</mat-label>
+
+            <input
+                matInput
+                [matDatepicker]="peremption"
+                formControlName="datePeremption">
+
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="peremption">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #peremption></mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>Quantité initiale</mat-label>
+
+            <input
+                type="number"
+                matInput
+                formControlName="quantiteInitiale">
+
+        </mat-form-field>
+
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    <button
+        mat-button
+        (click)="cancel()">
+
+        Annuler
+
+    </button>
+
+    <button
+        mat-raised-button
+        color="primary"
+        (click)="save()">
+
+        {{ data ? 'Modifier' : 'Enregistrer' }}
+
+    </button>
+
+</mat-dialog-actions>

@@ -5,405 +5,438 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
-import { StockInterface } from '../../interfaces/StockInterface';
-import { StockService } from '../../core/services/stock';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+
+import { StockInterface } from '../../interfaces/StockInterface';
+
+import { StockService } from '../../core/services/stock';
+
+import { MouvementStockService } from '../../core/services/mouvement-stock';
 
 import { MouvementStockDialog } from './mouvement-stock-dialog/mouvement-stock-dialog';
 
 
 
 @Component({
-  selector: 'app-stock',
 
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule
-  ],
+selector:'app-stock',
 
-  templateUrl: './stock.html',
+standalone:true,
 
-  styleUrl: './stock.css',
+imports:[
+
+CommonModule,
+
+MatTableModule,
+
+MatButtonModule,
+
+MatIconModule
+
+],
+
+templateUrl:'./stock.html',
+
+styleUrl:'./stock.css'
+
 })
 export class Stock implements OnInit {
 
 
-  stocks: StockInterface[] = [];
 
+stocks:StockInterface[]=[];
 
 
-  displayedColumns = [
 
-    'produit',
 
-    'disponible',
+displayedColumns=[
 
-    'reserve',
+'lot',
 
-    'reelle',
+'produit',
 
-    'actions'
+'peremption',
 
-  ];
+'disponible',
 
+'reserve',
 
+'reelle',
 
+'actions'
 
+];
 
-  constructor(
 
-    private stockService: StockService,
 
-    private cd: ChangeDetectorRef,
 
-    private dialog: MatDialog,
 
-    private snackBar: MatSnackBar
+constructor(
 
+private stockService:StockService,
 
-  ) {}
+private mouvementService:MouvementStockService,
 
+private dialog:MatDialog,
 
+private snackBar:MatSnackBar,
 
+private cd:ChangeDetectorRef
 
+){}
 
-  ngOnInit(): void {
 
 
-    this.loadStocks();
 
 
-  }
+ngOnInit():void{
 
 
+this.loadStocks();
 
 
+}
 
 
 
-  /**
-   * Charger tous les stocks
-   */
-  loadStocks(){
 
 
-    this.stockService.getAllStocks()
 
-    .subscribe({
+/**
+ * Charger tous les stocks
+ */
+loadStocks(){
 
-      next:(response)=>{
 
+this.stockService.findAll()
 
-        this.stocks = response.data;
+.subscribe({
 
+next:(response)=>{
 
-        this.cd.detectChanges();
 
+this.stocks=response.data;
 
-      },
 
+this.cd.detectChanges();
 
-      error:(err)=>{
 
+},
 
-        console.log(err);
 
+error:(err)=>{
 
-      }
 
+console.error(err);
 
-    });
 
+}
 
-  }
 
+});
 
 
+}
 
 
 
 
-  /**
-   * Charger uniquement les stocks faibles
-   */
-  loadStocksFaibles(){
 
 
-    this.stockService.getStockFaible()
 
-    .subscribe({
 
-      next:(response)=>{
+/**
+ * Charger uniquement les stocks faibles
+ */
+loadStocksFaibles(){
 
 
-        this.stocks = response.data;
 
+this.stockService.getStockFaible()
 
-        this.cd.detectChanges();
+.subscribe({
 
+next:(response)=>{
 
-      },
 
+this.stocks=response.data;
 
-      error:(err)=>{
 
+this.cd.detectChanges();
 
-        console.log(err);
 
+},
 
-      }
 
+error:(err)=>{
 
-    });
 
+console.error(err);
 
-  }
 
+}
 
 
+});
 
 
+}
 
 
 
 
-  augmenter(stock: StockInterface){
 
 
 
-    const dialogRef = this.dialog.open(
 
-      MouvementStockDialog,
+/**
+ * Entrée en stock
+ */
+augmenter(stock:StockInterface){
 
-      {
 
-        width:'450px',
 
-        data:{
+const dialogRef=this.dialog.open(
 
-          type:'ENTREE',
+MouvementStockDialog,
 
-          produit:stock.produitDesignation
+{
 
-        }
+width:'450px',
 
-      }
+data:{
 
-    );
+type:'ENTREE',
 
+numeroLot:stock.numeroLot,
 
+produit:stock.produitDesignation
 
+}
 
+}
 
+);
 
-    dialogRef.afterClosed()
 
-    .subscribe(qte=>{
 
 
-      if(!qte){
 
-        return;
 
-      }
+dialogRef.afterClosed()
 
+.subscribe(qte=>{
 
 
+if(!qte){
 
+return;
 
-      this.stockService.augmenterStock(
+}
 
-        stock.produitCode,
 
-        qte
 
-      )
 
-      .subscribe({
 
-        next:(response)=>{
+this.mouvementService.save({
 
+numeroLot:stock.numeroLot,
 
-          this.snackBar.open(
+quantite:qte,
 
-            response.message,
+type:'ENTREE',
 
-            'Fermer',
+observation:'Entrée en stock'
 
-            {
 
-              duration:3000
+})
 
-            }
+.subscribe({
 
-          );
+next:(response)=>{
 
 
+this.snackBar.open(
 
-          this.loadStocks();
+response.message,
 
+"Fermer",
 
+{
 
-        },
+duration:3000
 
+}
 
-        error:(err)=>{
+);
 
 
-          this.snackBar.open(
+this.loadStocks();
 
-            err.error?.message ?? 
-            "Erreur lors de l'entrée en stock",
 
-            'Fermer',
+},
 
-            {
 
-              duration:4000
+error:(err)=>{
 
-            }
 
-          );
+this.snackBar.open(
 
+err.error?.message ??
+"Erreur entrée stock",
 
-        }
+"Fermer",
 
+{
 
-      });
+duration:4000
 
+}
 
+);
 
-    });
 
+}
 
 
-  }
+});
 
 
 
+});
 
 
+}
 
 
 
 
-  diminuer(stock:StockInterface){
 
 
 
-    const dialogRef = this.dialog.open(
 
-      MouvementStockDialog,
 
-      {
+/**
+ * Sortie de stock
+ */
+diminuer(stock:StockInterface){
 
-        width:'450px',
 
-        data:{
 
-          type:'SORTIE',
+const dialogRef=this.dialog.open(
 
-          produit:stock.produitDesignation
+MouvementStockDialog,
 
-        }
+{
 
-      }
+width:'450px',
 
-    );
+data:{
 
+type:'SORTIE',
 
+numeroLot:stock.numeroLot,
 
+produit:stock.produitDesignation
 
+}
 
+}
 
+);
 
-    dialogRef.afterClosed()
 
-    .subscribe(qte=>{
 
 
-      if(!qte){
 
-        return;
 
-      }
+dialogRef.afterClosed()
 
+.subscribe(qte=>{
 
 
+if(!qte){
 
+return;
 
+}
 
-      this.stockService.diminuerStock(
 
-        stock.produitCode,
 
-        qte
 
-      )
 
-      .subscribe({
 
-        next:(response)=>{
+this.mouvementService.save({
 
+numeroLot:stock.numeroLot,
 
-          this.snackBar.open(
+quantite:qte,
 
-            response.message,
+type:'SORTIE',
 
-            'Fermer',
+observation:'Sortie de stock'
 
-            {
 
-              duration:3000
+})
 
-            }
+.subscribe({
 
-          );
+next:(response)=>{
 
 
+this.snackBar.open(
 
-          this.loadStocks();
+response.message,
 
+"Fermer",
 
+{
 
-        },
+duration:3000
 
+}
 
-        error:(err)=>{
+);
 
 
-          this.snackBar.open(
+this.loadStocks();
 
-            err.error?.message ??
-            "Erreur lors de la sortie du stock",
 
-            'Fermer',
+},
 
-            {
 
-              duration:4000
+error:(err)=>{
 
-            }
 
-          );
+this.snackBar.open(
 
+err.error?.message ??
+"Erreur sortie stock",
 
-        }
+"Fermer",
 
+{
 
-      });
+duration:4000
 
+}
 
+);
 
-    });
 
+}
 
 
-  }
+});
+
+
+
+});
+
+
+}
 
 
 

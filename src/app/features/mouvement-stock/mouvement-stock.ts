@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-
-import { MouvementStockService } from '../../core/services/mouvement-stock';
 import { MouvementStockInterface } from '../../interfaces/MouvementStockInterface';
+import { MouvementStockService } from '../../core/services/mouvement-stock';
+
 
 @Component({
   selector: 'app-mouvement-stock',
@@ -20,47 +20,98 @@ import { MouvementStockInterface } from '../../interfaces/MouvementStockInterfac
 })
 export class MouvementStock implements OnInit {
 
+
+
   mouvements: MouvementStockInterface[] = [];
 
+
+
+
   displayedColumns = [
+
     'date',
+
+    'lot',
+
     'produit',
+
     'type',
+
     'quantite',
+
     'reference',
+
     'observation'
+
   ];
 
+
+
+
+
+
   constructor(
+
     private mouvementService: MouvementStockService,
+
     private cd: ChangeDetectorRef
+
   ) {}
 
+
+
+
+
+
+
   ngOnInit(): void {
+
     this.loadMouvements();
+
   }
+
+
+
+
+
+
+
 
   loadMouvements(): void {
 
+
+
     this.mouvementService.findAll()
+
       .subscribe({
 
-        next: (response) => {
+        next:(response)=>{
+
 
           this.mouvements = response.data;
 
+
           this.cd.detectChanges();
+
 
         },
 
-        error: (err) => {
+
+        error:(err)=>{
+
 
           console.error(err);
 
+
         }
+
 
       });
 
+
+
   }
+
+
 
 }

@@ -1,53 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { environment } from '../../interfaces/environment';
 import { ApiResponse } from '../../interfaces/ApiResponse';
+import { environment } from '../../interfaces/environment';
 import { StockInterface } from '../../interfaces/StockInterface';
 
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StockService {
+
 
 
   private url = environment.apiUrl + "/stock";
 
 
+
   constructor(
-    private http: HttpClient
-  ) {}
-
-
-
-
-
-  /**
-   * Récupérer le stock d'un produit
-   */
-  getStockByProduit(code: string) {
-
-
-    return this.http.get<ApiResponse<StockInterface>>(
-
-      `${this.url}/produit/${code}`
-
-    );
-
-  }
-
-
-
+    private http:HttpClient
+  ){}
 
 
 
 
   /**
-   * Récupérer tous les stocks
+   * Tous les stocks
    */
-  getAllStocks(){
+  findAll(){
 
 
     return this.http.get<ApiResponse<StockInterface[]>>(
@@ -64,115 +45,41 @@ export class StockService {
 
 
 
+  /**
+   * Stock d'un lot
+   */
+  findByLot(numeroLot:string){
+
+
+    return this.http.get<ApiResponse<StockInterface>>(
+
+      `${this.url}/lot/${numeroLot}`
+
+    );
+
+
+  }
+
+
+
+
+
 
 
   /**
-   * Récupérer uniquement les stocks faibles
+   * Stocks faibles
    */
   getStockFaible(){
 
 
     return this.http.get<ApiResponse<StockInterface[]>>(
 
-
-      `${this.url}/faible`
-
+      `${this.url}/faibles`
 
     );
 
 
   }
-
-
-
-
-
-
-
-
-  /**
-   * Augmenter le stock
-   */
-  augmenterStock(
-    code:string,
-    quantite:number
-  ){
-
-
-    return this.http.put<ApiResponse<StockInterface>>(
-
-
-      `${this.url}/augmenter/${code}?quantite=${quantite}`,
-
-
-      {}
-
-
-    );
-
-
-  }
-
-
-
-
-
-
-
-
-  /**
-   * Diminuer le stock
-   */
-  diminuerStock(
-    code:string,
-    quantite:number
-  ){
-
-
-    return this.http.put<ApiResponse<StockInterface>>(
-
-
-      `${this.url}/diminuer/${code}?quantite=${quantite}`,
-
-
-      {}
-
-
-    );
-
-
-  }
-
-
-
-
-
-
-
-
-  /**
-   * Ajustement inventaire
-   */
-  ajusterStock(
-    code:string,
-    quantite:number
-  ){
-
-
-    return this.http.put<ApiResponse<StockInterface>>(
-
-
-      `${this.url}/ajuster/${code}?quantite=${quantite}`,
-
-
-      {}
-
-
-    );
-
-
-  }
-
 
 
 }

@@ -1,33 +1,29 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
-
-import { MatIconModule } from '@angular/material/icon';
-
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MatDialog } from '@angular/material/dialog';
-
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
-import { Produit } from '../../core/services/produit';
-
-import { ProduitDialog } from './produit-dialog/produit-dialog';
-
-import { ProduitInterface } from '../../interfaces/ProduitInterface';
+import { LotInterface } from '../../interfaces/LotInterface';
 
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { LotsService } from '../../core/services/lots-service';
+import { LotDialog } from './lot-dialog/lot-dialog';
 
 
 
 @Component({
 
-  selector: 'app-produits',
+  selector:'app-lot',
 
-  imports: [
+  standalone:true,
+
+  imports:[
 
     CommonModule,
 
@@ -35,39 +31,46 @@ import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 
     MatButtonModule,
 
-    MatIconModule
+    MatIconModule,
+
+    MatTooltipModule
 
   ],
 
-  templateUrl: './produits.html',
+  templateUrl:'./lot.html',
 
-  styleUrl: './produits.css'
+  styleUrl:'./lot.css'
 
 })
 
-export class Produits implements OnInit {
+
+export class Lot implements OnInit {
 
 
 
-  produits: ProduitInterface[] = [];
+  lots:LotInterface[]=[];
 
 
 
-  displayedColumns = [
+  today = new Date();
 
-    'code',
 
-    'designation',
 
-    'categorie',
 
-    'prixAchat',
 
-    'prixVente',
+  displayedColumns=[
 
-    'stockMinimum',
+    'numeroLot',
 
-    'actif',
+    'produit',
+
+    'fabrication',
+
+    'peremption',
+
+    'quantite',
+
+    'statut',
 
     'actions'
 
@@ -77,25 +80,27 @@ export class Produits implements OnInit {
 
 
 
+
+
   constructor(
 
-    private produitService: Produit,
+    private lotService:LotsService,
 
-    private dialog: MatDialog,
+    private dialog:MatDialog,
 
-    private snackBar: MatSnackBar,
+    private snackBar:MatSnackBar,
 
     private cd: ChangeDetectorRef
 
-  ){}
+){}
 
 
 
 
 
-  ngOnInit(): void {
+  ngOnInit():void {
 
-    this.loadProduits();
+    this.loadLots();
 
   }
 
@@ -105,28 +110,45 @@ export class Produits implements OnInit {
 
 
 
-  loadProduits(){
 
 
-    this.produitService.findAll()
+  loadLots():void {
+
+
+    this.lotService.findAll()
 
     .subscribe({
 
       next:(response)=>{
 
 
-        this.produits = response.data;
+    this.lots = response.data;
 
 
-        this.cd.detectChanges();
+    this.cd.detectChanges();
 
 
-      },
+},
 
 
       error:(err)=>{
 
-        console.log(err);
+
+        console.error(err);
+
+
+        this.snackBar.open(
+
+          "Erreur chargement lots",
+
+          "Fermer",
+
+          {
+            duration:3000
+          }
+
+        );
+
 
       }
 
@@ -144,17 +166,85 @@ export class Produits implements OnInit {
 
 
 
-  nouveauProduit(){
+  /**
+   * Vérifie si un lot est expiré
+   */
 
+  isExpire(date:string):boolean {
+
+
+    if(!date){
+
+      return false;
+
+    }
+
+
+    return new Date(date) < new Date();
+
+
+  }
+
+
+
+
+
+
+
+
+
+  /**
+   * Expiration dans les 30 jours
+   */
+
+  expireBientot(date:string):boolean {
+
+
+    if(!date){
+
+      return false;
+
+    }
+
+
+
+    const expiration = new Date(date);
+
+
+    const limite = new Date();
+
+
+    limite.setDate(
+      limite.getDate()+30
+    );
+
+
+
+    return expiration <= limite
+        &&
+        expiration >= new Date();
+
+
+  }
+
+
+
+
+
+
+
+
+
+  nouveauLot():void {
 
 
     const dialogRef = this.dialog.open(
 
-      ProduitDialog,
+      LotDialog,
 
       {
 
-        width:'700px',
+        width:'600px',
 
         disableClose:true
 
@@ -180,7 +270,8 @@ export class Produits implements OnInit {
 
 
 
-      this.produitService.save(result)
+
+      this.lotService.save(result)
 
       .subscribe({
 
@@ -194,15 +285,14 @@ export class Produits implements OnInit {
             "Fermer",
 
             {
-
               duration:3000
-
             }
 
           );
 
 
-          this.loadProduits();
+
+          this.loadLots();
 
 
         },
@@ -214,14 +304,12 @@ export class Produits implements OnInit {
           this.snackBar.open(
 
             err.error?.message ??
-            "Erreur création produit",
+            "Erreur création lot",
 
             "Fermer",
 
             {
-
               duration:4000
-
             }
 
           );
@@ -237,7 +325,6 @@ export class Produits implements OnInit {
     });
 
 
-
   }
 
 
@@ -248,31 +335,26 @@ export class Produits implements OnInit {
 
 
 
-  modifierProduit(
-    produit:ProduitInterface
-  ){
+  modifierLot(lot:LotInterface):void {
+
 
 
     const dialogRef = this.dialog.open(
 
-      ProduitDialog,
+      LotDialog,
 
       {
 
-
-        width:'700px',
-
+        width:'600px',
 
         disableClose:true,
 
-
-        data:produit
-
+        data:lot
 
       }
 
-
     );
+
 
 
 
@@ -291,9 +373,12 @@ export class Produits implements OnInit {
 
 
 
-      this.produitService.update(
 
-        produit.id!,
+
+
+      this.lotService.update(
+
+        lot.id!,
 
         result
 
@@ -311,15 +396,14 @@ export class Produits implements OnInit {
             "Fermer",
 
             {
-
               duration:3000
-
             }
 
           );
 
 
-          this.loadProduits();
+
+          this.loadLots();
 
 
         },
@@ -331,14 +415,12 @@ export class Produits implements OnInit {
           this.snackBar.open(
 
             err.error?.message ??
-            "Erreur modification produit",
+            "Erreur modification lot",
 
             "Fermer",
 
             {
-
               duration:4000
-
             }
 
           );
@@ -364,31 +446,27 @@ export class Produits implements OnInit {
 
 
 
-  supprimerProduit(
-    produit:ProduitInterface
-  ){
+  supprimerLot(lot:LotInterface):void {
 
 
 
-    const dialogRef = this.dialog.open(
+    const dialogRef=this.dialog.open(
 
       ConfirmDialog,
 
       {
 
-
         width:'450px',
-
 
         data:{
 
 
-          title:'Suppression produit',
+          title:"Suppression lot",
 
 
           message:
 
-          `Voulez-vous supprimer le produit "${produit.designation}" ?`
+          `Voulez-vous supprimer le lot "${lot.numeroLot}" ?`
 
 
         }
@@ -398,6 +476,8 @@ export class Produits implements OnInit {
 
 
     );
+
+
 
 
 
@@ -418,9 +498,9 @@ export class Produits implements OnInit {
 
 
 
-      this.produitService.delete(
+      this.lotService.delete(
 
-        produit.id!
+        lot.id!
 
       )
 
@@ -436,18 +516,17 @@ export class Produits implements OnInit {
             "Fermer",
 
             {
-
               duration:3000
-
             }
 
           );
 
 
-          this.loadProduits();
+          this.loadLots();
 
 
         },
+
 
 
         error:(err)=>{
@@ -456,14 +535,12 @@ export class Produits implements OnInit {
           this.snackBar.open(
 
             err.error?.message ??
-            "Erreur suppression produit",
+            "Erreur suppression lot",
 
             "Fermer",
 
             {
-
               duration:4000
-
             }
 
           );
@@ -475,13 +552,11 @@ export class Produits implements OnInit {
       });
 
 
+
     });
 
 
-
   }
-
-
 
 
 

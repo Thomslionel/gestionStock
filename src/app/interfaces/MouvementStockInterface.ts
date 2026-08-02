@@ -1,12 +1,12 @@
-
-
 export interface MouvementStockInterface {
 
 
     id:number;
 
 
+
     dateMouvement:string;
+
 
 
     type:
@@ -24,19 +24,24 @@ export interface MouvementStockInterface {
     quantite:number;
 
 
-    reference:string;
+
+    reference?:string;
 
 
-    observation:string;
+
+    observation?:string;
+
+
+
+    numeroLot:string;
+
 
 
     produitCode:string;
 
 
+
     produitDesignation:string;
-
-
-    
 
 
 }

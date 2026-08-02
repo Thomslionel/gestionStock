@@ -10,7 +10,10 @@
 
 
 
-        <button mat-raised-button color="primary" (click)="nouveauProduit()">
+        <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="nouveauProduit()">
 
 
             <mat-icon>
@@ -28,21 +31,38 @@
 
 
 
-    <table mat-table [dataSource]="produits" class="mat-elevation-z3">
+
+    <table 
+        mat-table 
+        [dataSource]="produits" 
+        class="mat-elevation-z3">
 
 
+
+
+
+
+        <!-- CODE PRODUIT -->
 
         <ng-container matColumnDef="code">
 
-            <th mat-header-cell *matHeaderCellDef>
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
                 Code
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
 
                 {{p.code}}
 
+
             </td>
 
         </ng-container>
@@ -50,95 +70,185 @@
 
 
 
+
+
+
+
+        <!-- DESIGNATION -->
 
         <ng-container matColumnDef="designation">
 
-            <th mat-header-cell *matHeaderCellDef>
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
                 Désignation
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
 
                 {{p.designation}}
 
+
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- CATEGORIE -->
 
         <ng-container matColumnDef="categorie">
 
-            <th mat-header-cell *matHeaderCellDef>
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
                 Catégorie
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
 
                 {{p.categorieLibelle}}
 
+
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- PRIX ACHAT -->
 
         <ng-container matColumnDef="prixAchat">
 
-            <th mat-header-cell *matHeaderCellDef>
+
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
                 Prix achat
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
 
-                {{p.prixAchat}} FCFA
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
+
+                {{p.prixAchat | number}} FCFA
+
 
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- PRIX VENTE -->
 
         <ng-container matColumnDef="prixVente">
 
-            <th mat-header-cell *matHeaderCellDef>
+
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
                 Prix vente
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
 
-                {{p.prixVente}} FCFA
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
+
+                {{p.prixVente | number}} FCFA
+
 
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- STOCK MINIMUM -->
 
         <ng-container matColumnDef="stockMinimum">
 
-            <th mat-header-cell *matHeaderCellDef>
-                Stock min
+
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
+                Stock minimum
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
+
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
 
                 {{p.stockMinimum}}
 
+
             </td>
+
 
         </ng-container>
 
@@ -146,59 +256,181 @@
 
 
 
+
+
+
+
+        <!-- ETAT -->
+
         <ng-container matColumnDef="actif">
 
-            <th mat-header-cell *matHeaderCellDef>
+
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
                 Etat
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
+
+            <td 
+                mat-cell 
+                *matCellDef="let p">
 
 
-                <span class="status" [ngClass]="p.actif?'active':'inactive'">
 
-                    {{p.actif?'Actif':'Inactif'}}
+                <span 
+                    class="status"
+                    [ngClass]="p.actif ? 'active':'inactive'">
+
+
+                    {{p.actif ? 'Actif':'Inactif'}}
+
 
                 </span>
 
 
+
             </td>
+
 
         </ng-container>
 
 
 
 
+
+
+
+
+
+        <!-- LOTS -->
+
+        <ng-container matColumnDef="lots">
+
+
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
+                Lots
+
+
+            </th>
+
+
+
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
+
+                <button
+
+                    mat-icon-button
+
+                    color="primary"
+
+                    matTooltip="Voir les lots">
+
+
+                    <mat-icon>
+
+                        inventory_2
+
+                    </mat-icon>
+
+
+                </button>
+
+
+            </td>
+
+
+        </ng-container>
+
+
+
+
+
+
+
+
+
+        <!-- ACTIONS -->
 
         <ng-container matColumnDef="actions">
 
 
-            <th mat-header-cell *matHeaderCellDef>
+            <th 
+                mat-header-cell 
+                *matHeaderCellDef>
+
+
                 Actions
+
+
             </th>
 
 
-            <td mat-cell *matCellDef="let p">
 
 
-                <button mat-icon-button color="primary" (click)="modifierProduit(p)">
+            <td 
+                mat-cell 
+                *matCellDef="let p">
+
+
+
+                <button
+
+                    mat-icon-button
+
+                    color="primary"
+
+                    matTooltip="Modifier"
+
+                    (click)="modifierProduit(p)">
+
 
                     <mat-icon>
+
                         edit
+
                     </mat-icon>
+
 
                 </button>
 
 
 
-                <button mat-icon-button color="warn" (click)="supprimerProduit(p)">
+
+
+                <button
+
+                    mat-icon-button
+
+                    color="warn"
+
+                    matTooltip="Supprimer"
+
+                    (click)="supprimerProduit(p)">
+
 
                     <mat-icon>
+
                         delete
+
                     </mat-icon>
 
+
                 </button>
+
+
 
 
             </td>
@@ -210,18 +442,49 @@
 
 
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns">
+
+
+
+
+        <!-- HEADER -->
+
+        <tr
+
+            mat-header-row
+
+            *matHeaderRowDef="displayedColumns">
+
 
         </tr>
 
 
-        <tr mat-row *matRowDef="let row; columns: displayedColumns">
+
+
+
+
+
+
+
+        <!-- ROW -->
+
+        <tr
+
+            mat-row
+
+            *matRowDef="let row; columns: displayedColumns;">
+
 
         </tr>
+
+
+
 
 
 
     </table>
+
+
+
 
 
 </div>
